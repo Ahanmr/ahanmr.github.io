@@ -27,9 +27,9 @@ class AhanMR:
 
     def projects(self):
         return [
-            {'Question Answering System using Seq2Seq Model': 'Worked on implementing a Natural Language Generation Model using encoder-decoder architecture with attention, with contextual Glove embeddings, and benchmarked the QA System on Stanford QnA Dataset'},
-            {'Image Segmentation using Conditional Random Fields': 'A study project to learn about the different Image Segmentation techniques to improve the post CNN output, using the Probabilistic graphical models such as CRFs.'},
-            {'Decoding Brain EEG Signals using Hybrid CNN-LSTM architecture': 'Build a time-frequency representation of EEG Data using Mel-Spectogram, and built a hybrid architecture of CNNs and LSTMs to classify the brain-state of the signals into alpha, beta and delta waves of sleep cycle.'}
+            {'Question Answering System using Seq2Seq Model': 'Design Project' },
+            {'Image Segmentation using Conditional Random Fields': 'Study Project' },
+            {'Decoding Brain EEG Signals using Hybrid CNN-LSTM architecture': 'Laboratory Project at Cognitive Neuroscience Lab' }
         ]
 
     def responsibilities(self):
@@ -40,6 +40,6 @@ class AhanMR:
         }
 
     def getResume(self):
-        return 'https://ahanmr.me/resume.pdf'
+        return 'https://ahanmr.github.io/resume.pdf'
 
 
