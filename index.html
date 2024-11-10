@@ -45,7 +45,7 @@
             <div class="container">
                 <h1>Ahan M R</h1>
                 <p class="subtitle">Applied Scientist @ Amazon | AI/ML Researcher</p>
-                <p class="brief-intro">Specializing in Large Language Models, Agentic AI, and Recommendation Systems</p>
+                <p class="brief-intro">Specializing in Large Language Models, Cultural AI, and Multilingual Systems</p>
             </div>
         </section>
 
@@ -393,22 +393,31 @@
     let slideIndex = 0;
     showSlides();
 
-    function showSlides() {
-        let slides = document.getElementsByClassName("slide");
-        
-        // Hide all slides
-        for (let i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
+    let lastScrollTop = 0;
+    const header = document.querySelector('header');
+    const mobileBreakpoint = 768;
+
+    function handleScroll() {
+        if (window.innerWidth <= mobileBreakpoint) {
+            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (currentScroll > lastScrollTop) {
+                // Scrolling down
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                // Scrolling up
+                header.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+        } else {
+            // Reset header style for desktop
+            header.style.transform = 'translateY(0)';
         }
-        
-        // Show next slide
-        slideIndex++;
-        if (slideIndex > slides.length) {slideIndex = 1}
-        slides[slideIndex-1].style.display = "block";
-        
-        // Change image every 5 seconds
-        setTimeout(showSlides, 5000);
     }
+
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
 
     // Dark mode toggle functionality
     const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');

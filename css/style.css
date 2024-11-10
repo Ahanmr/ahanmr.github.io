@@ -27,6 +27,7 @@ header {
     width: 100%;
     top: 36px;
     z-index: 1000;
+    transition: transform 0.3s ease-in-out;
 }
 
 nav ul {
@@ -859,5 +860,17 @@ body, header, .experience-item, .research-item, .publication {
 @media (max-width: 768px) {
     .theme-switch-wrapper {
         top: 80px;
+    }
+}
+
+/* Add media query for mobile devices */
+@media (max-width: 768px) {
+    header {
+        top: 0; /* Adjust top position for mobile */
+    }
+    
+    /* Adjust main content margin for mobile */
+    main {
+        margin-top: 0;
     }
 }
