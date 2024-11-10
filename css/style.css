@@ -1189,11 +1189,40 @@ a:hover {
     /* Adjust theme switch position for mobile */
     .theme-switch-wrapper {
         top: 45px;
+        right: 20px;
     }
 
     /* Adjust main content spacing */
     main {
         margin-top: 36px;
+    }
+
+    /* Adjust announcement banner for mobile */
+    .announcement-banner {
+        font-size: 0.9rem;
+        padding: 5px 0;
+    }
+
+    /* Make profile image responsive */
+    .profile-image img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Adjust section padding */
+    .section {
+        padding: 40px 0;
+    }
+
+    /* Make experience items more compact */
+    .experience-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .company-logo {
+        width: 40px;
+        height: 40px;
     }
 }
 
