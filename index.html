@@ -35,6 +35,7 @@
                 <li><a href="#research">Research</a></li>
                 <li><a href="#publications">Publications</a></li>
                 <li><a href="#achievements">Achievements</a></li>
+                <li><a href="blog.html">Blog</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
@@ -45,7 +46,21 @@
             <div class="container">
                 <h1>Ahan M R</h1>
                 <p class="subtitle">Applied Scientist @ Amazon | AI/ML Researcher</p>
-                <p class="brief-intro">Specializing in Large Language Models, Cultural AI, and Multilingual Systems</p>
+                <p class="brief-intro">Specializing in Large Language Models, Agentic AI, and Recommendation Systems</p>
+                <div class="social-links-hero">
+                    <a href="https://linkedin.com/in/ahanmr" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Ahanmr" target="_blank" rel="noopener noreferrer" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://x.com/AhanMR" target="_blank" rel="noopener noreferrer" title="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://www.kaggle.com/ahanmr98" target="_blank" rel="noopener noreferrer" title="Kaggle">
+                        <i class="fab fa-kaggle"></i>
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -83,7 +98,7 @@
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon Logo">
                             </div>
                             <div class="experience-title">
-                                <h3>Applied Scientist - Alexa International</h3>
+                                <h3>Applied Scientist @ Amazon - Alexa International</h3>
                                 <p class="duration">May 2022 - Present</p>
                             </div>
                         </div>
@@ -101,7 +116,7 @@
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Lowes_Companies_Logo.svg" alt="Lowe's Logo">
                             </div>
                             <div class="experience-title">
-                                <h3>Data Scientist - Search and Personalisation</h3>
+                                <h3>Data Scientist @ Lowe's - Search and Personalisation</h3>
                                 <p class="duration">May 2021 - May 2022</p>
                             </div>
                         </div>
@@ -118,7 +133,7 @@
                                 <img src="images/Deepchecks-Logo.jpg" alt="Deepchecks Logo">
                             </div>
                             <div class="experience-title">
-                                <h3>Open-Source Contributor - Relevancy</h3>
+                                <h3>Open-Source Contributor @ Deepchecks - Relevancy</h3>
                                 <p class="duration">Oct 2023 - Feb 2024</p>
                             </div>
                         </div>
@@ -134,7 +149,7 @@
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Research Logo">
                             </div>
                             <div class="experience-title">
-                                <h3>Research Intern - AI & IoT for Sustainability</h3>
+                                <h3>Research Intern @ Microsoft Research - AI & IoT for Sustainability</h3>
                                 <p class="duration">Aug 2020 - Jun 2021</p>
                                 <p class="subtitle">Thesis Advisor: Dr. Akshay Nambi</p>
                             </div>
@@ -153,7 +168,7 @@
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg" alt="American Express Logo">
                             </div>
                             <div class="experience-title">
-                                <h3>Research Intern - Document Recognition & Processing</h3>
+                                <h3>Research Intern @ American Express - Document Recognition & Processing</h3>
                                 <p class="duration">May 2019 - Jul 2019</p>
                             </div>
                         </div>
@@ -169,7 +184,7 @@
                                 <img src="images/ust-logo.jpg" alt="UST Global Logo">
                             </div>
                             <div class="experience-title">
-                                <h3>Summer Intern - Infinity Lab</h3>
+                                <h3>Summer Intern @ UST Global - Infinity Lab</h3>
                                 <p class="duration">May 2018 - Jul 2018</p>
                             </div>
                         </div>
@@ -393,31 +408,22 @@
     let slideIndex = 0;
     showSlides();
 
-    let lastScrollTop = 0;
-    const header = document.querySelector('header');
-    const mobileBreakpoint = 768;
-
-    function handleScroll() {
-        if (window.innerWidth <= mobileBreakpoint) {
-            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-            
-            if (currentScroll > lastScrollTop) {
-                // Scrolling down
-                header.style.transform = 'translateY(-100%)';
-            } else {
-                // Scrolling up
-                header.style.transform = 'translateY(0)';
-            }
-            
-            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-        } else {
-            // Reset header style for desktop
-            header.style.transform = 'translateY(0)';
+    function showSlides() {
+        let slides = document.getElementsByClassName("slide");
+        
+        // Hide all slides
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
         }
+        
+        // Show next slide
+        slideIndex++;
+        if (slideIndex > slides.length) {slideIndex = 1}
+        slides[slideIndex-1].style.display = "block";
+        
+        // Change image every 5 seconds
+        setTimeout(showSlides, 5000);
     }
-
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleScroll);
 
     // Dark mode toggle functionality
     const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');

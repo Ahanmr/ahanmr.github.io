@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahan M R - Blog</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div class="announcement-banner">
+        <div class="announcement-content">
+            <span>🔍 Looking for opportunities as Applied Scientist in the field of LLMs or building recommendation systems</span>
+            <span>🏆 Won 2nd place [$4000] in the Multi-factor Analysis Challenge hosted by OCEAN Protocol and Numerai Hedge Fund '24</span>
+            <span>🏆 Top-50 in the ADIA Causal Discovery Challenge by CrunchDAO '24</span>
+            <span>🏆 Won 1st place [$2500] in the Venture Capital Challenge hosted by OCEAN Protocol '24</span>
+        </div>
+    </div>
+
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
+            </div>
+        </label>
+    </div>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#research">Research</a></li>
+                <li><a href="index.html#publications">Publications</a></li>
+                <li><a href="index.html#achievements">Achievements</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="blog-section">
+            <div class="container">
+                <h1></h1>
+                
+                <article class="blog-post">
+                    <div class="blog-header" onclick="toggleBlog(this)">
+                        <h2>Understanding Self-Attention, Encoder-Decoder Architecture, and PEFT</h2>
+                        <div class="post-meta">
+                            <span class="date">April 10, 2024</span>
+                            <span class="author">By Ahan M R</span>
+                        </div>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    
+                    <div class="post-content collapsed">
+                        <h3>Self-Attention Mechanism</h3>
+                        <p>Self-attention is a fundamental component of transformer architectures that allows models to weigh the importance of different parts of the input sequence when processing each element. The basic self-attention formula is:</p>
+                        
+                        <div class="equation">
+                            \[
+                            \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+                            \]
+                        </div>
+
+                        <p>Where:</p>
+                        <ul>
+                            <li>Q (Query), K (Key), and V (Value) are learned linear transformations of the input</li>
+                            <li>\(d_k\) is the dimension of the key vectors</li>
+                            <li>The scaling factor \(\sqrt{d_k}\) prevents the dot products from growing too large</li>
+                        </ul>
+
+                        <h3>Encoder vs Decoder Attention</h3>
+                        <p>In the encoder:</p>
+                        <ul>
+                            <li>Uses bidirectional self-attention where each position can attend to all other positions</li>
+                            <li>The attention mask is all ones, allowing full visibility</li>
+                            <li>Mathematically represented as: \(M_{enc} = \mathbf{1}_{n \times n}\)</li>
+                        </ul>
+
+                        <p>In the decoder:</p>
+                        <ul>
+                            <li>Uses masked self-attention to prevent positions from attending to subsequent positions</li>
+                            <li>The attention mask is lower triangular: \(M_{dec}[i,j] = \begin{cases} 0 & \text{if } j > i \\ 1 & \text{otherwise} \end{cases}\)</li>
+                            <li>Cross-attention to encoder outputs:</li>
+                        </ul>
+
+                        <div class="equation">
+                            \[
+                            \text{CrossAttention}(Q_d, K_e, V_e) = \text{softmax}\left(\frac{Q_dK_e^T}{\sqrt{d_k}}\right)V_e
+                            \]
+                        </div>
+
+                        <h3>Parameter-Efficient Fine-Tuning (PEFT) with LoRA</h3>
+                        <p>Low-Rank Adaptation (LoRA) is a PEFT technique that modifies the attention weights efficiently:</p>
+
+                        <div class="equation">
+                            \[
+                            W = W_0 + BA
+                            \]
+                        </div>
+
+                        <p>Where:</p>
+                        <ul>
+                            <li>\(W_0\) is the frozen pretrained weights</li>
+                            <li>\(B \in \mathbb{R}^{d\times r}\) and \(A \in \mathbb{R}^{r\times d}\) are low-rank matrices</li>
+                            <li>\(r\) is the rank (typically 8 or 16)</li>
+                        </ul>
+
+                        <h3>Implementation Details</h3>
+                        <pre><code class="language-python">
+# Original attention projection
+y = Wx
+
+# LoRA equivalent
+y = W_0x + BA(x)
+
+# Efficient implementation
+def lora_layer(x, W_0, A, B, alpha):
+    return W_0(x) + alpha * B(A(x))
+        </code></pre>
+                    </div>
+                </article>
+
+                <article class="blog-post">
+                    <div class="blog-header" onclick="toggleBlog(this)">
+                        <h2>KV Cache: Accelerating Transformer Inference</h2>
+                        <div class="post-meta">
+                            <span class="date">April 12, 2024</span>
+                            <span class="author">By Ahan M R</span>
+                        </div>
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    
+                    <div class="post-content collapsed">
+                        <h3>Understanding KV Cache</h3>
+                        <p>Key-Value (KV) caching is a crucial optimization technique used in transformer models during inference, particularly in autoregressive generation. It significantly reduces computational overhead by storing and reusing previously computed key and value tensors.</p>
+
+                        <div class="equation">
+                            \[
+                            \text{Cache}_t = \{(K_1, V_1), (K_2, V_2), ..., (K_t, V_t)\}
+                            \]
+                        </div>
+
+                        <h3>Why KV Cache Matters</h3>
+                        <ul>
+                            <li>Eliminates redundant computations in autoregressive generation</li>
+                            <li>Reduces memory bandwidth requirements</li>
+                            <li>Speeds up inference by up to 4x in typical scenarios</li>
+                        </ul>
+
+                        <h3>Implementation in Decoder Architecture</h3>
+                        <pre><code class="language-python">
+class DecoderWithKVCache:
+    def __init__(self):
+        self.kv_cache = {}
+    
+    def forward(self, x, cache_position):
+        # Generate new key and value
+        new_k = self.k_proj(x)  # [B, 1, H]
+        new_v = self.v_proj(x)  # [B, 1, H]
+        
+        # Update cache
+        if cache_position in self.kv_cache:
+            k = torch.cat([self.kv_cache[cache_position][0], new_k], dim=1)
+            v = torch.cat([self.kv_cache[cache_position][1], new_v], dim=1)
+        else:
+            k, v = new_k, new_v
+            
+        self.kv_cache[cache_position] = (k, v)
+        
+        # Compute attention using cached keys and values
+        q = self.q_proj(x)  # [B, 1, H]
+        attn = torch.matmul(q, k.transpose(-2, -1)) / math.sqrt(self.head_dim)
+        attn = F.softmax(attn, dim=-1)
+        
+        return torch.matmul(attn, v)</code></pre>
+
+                        <h3>Memory Efficiency</h3>
+                        <p>The memory requirements for KV cache can be expressed as:</p>
+
+                        <div class="equation">
+                            \[
+                            M_{cache} = 2 \times N_{layers} \times S_{seq} \times D_{model} \times B_{size}
+                            \]
+                        </div>
+
+                        <p>Where:</p>
+                        <ul>
+                            <li>\(N_{layers}\) is the number of transformer layers</li>
+                            <li>\(S_{seq}\) is the sequence length</li>
+                            <li>\(D_{model}\) is the model dimension</li>
+                            <li>\(B_{size}\) is the batch size</li>
+                        </ul>
+
+                        <h3>Performance Impact</h3>
+                        <p>Consider a typical inference scenario:</p>
+                        <ul>
+                            <li>Without KV Cache: \(O(n^2)\) complexity per token</li>
+                            <li>With KV Cache: \(O(n)\) complexity per token</li>
+                            <li>Practical speedup: 2-4x faster inference</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Ahan M R. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+        const currentTheme = localStorage.getItem('theme');
+
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            if (currentTheme === 'dark') {
+                toggleSwitch.checked = true;
+            }
+        }
+
+        function switchTheme(e) {
+            if (e.target.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            }    
+        }
+
+        toggleSwitch.addEventListener('change', switchTheme, false);
+
+        // Initialize MathJax after the page loads
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+
+        function toggleBlog(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.expand-icon');
+            
+            content.classList.toggle('collapsed');
+            icon.textContent = content.classList.contains('collapsed') ? '▼' : '▲';
+        }
+    </script>
+</body>
+</html> 
